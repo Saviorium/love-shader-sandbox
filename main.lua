@@ -13,7 +13,22 @@ AssetManager = require "engine.utils.asset_manager"
 
 states = {
     menu = require "game.states.menu",
+    fullscreenShader = require "game.states.fullscreen_shader",
 }
+
+local function loadShader(name)
+    local shaderCode = love.filesystem.read("game/shaders/" .. name .. ".glsl")
+    return love.graphics.newShader(shaderCode)
+end
+
+shaders = {
+    coord = loadShader("coord")
+}
+
+local RingStruct = require "game.ring_struct"
+
+local shaderStates = RingStruct()
+shaderStates:push({type = "fullscreenShader", args = "coord"})
 
 function love.load()
     AssetManager:load("data")
@@ -49,5 +64,13 @@ function love.keypressed(key)
     end
     if key == "escape" then
         StateManager.switch(states.menu)
+    end
+    if key == "right" then
+        local nextShader = shaderStates:next()
+        StateManager.switch(states[nextShader.type], nextShader.args)
+    end
+    if key == "left" then
+        local nextShader = shaderStates:prev()
+        StateManager.switch(states[nextShader.type], nextShader.args)
     end
 end

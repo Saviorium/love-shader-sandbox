@@ -8,6 +8,7 @@ max_line_length = 160
 
 globals = {
   -- love and libs
+  "love",
   "Class",
   "Vector",
   "serpent", -- todo: include by demand only
@@ -32,4 +33,5 @@ globals = {
 
   -- game
   "fonts",
+  "shaders",
 }
