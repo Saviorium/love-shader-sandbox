@@ -22,13 +22,17 @@ local function loadShader(name)
 end
 
 shaders = {
-    coord = loadShader("coord")
+    coord = loadShader("coord"),
+    time = loadShader("time"),
+    mouse = loadShader("mouse"),
 }
 
 local RingStruct = require "game.ring_struct"
 
 local shaderStates = RingStruct()
 shaderStates:push({type = "fullscreenShader", args = "coord"})
+shaderStates:push({type = "fullscreenShader", args = "time"})
+shaderStates:push({type = "fullscreenShader", args = "mouse"})
 
 function love.load()
     AssetManager:load("data")

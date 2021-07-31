@@ -4,7 +4,7 @@ local RingStruct = Class {
     init = function(self)
         self.elements = {}
         self.head = 1
-        self.current = 1
+        self.current = 0
     end
 }
 
