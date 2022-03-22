@@ -1,12 +1,19 @@
 // From exercises of https://thebookofshaders.com/09/
 // https://graphicriver.net/item/vector-pattern-scottish-tartan/6590076 this pattern
 
-uniform vec2 mouse_coords;
+uniform vec2 mouse_normalized;
 
 vec2 zoom_by_mouse(vec2 coords) {
-    vec2 mouse_normalized = mouse_coords / love_ScreenSize.xy;
     float zoom = (1 / max(mouse_normalized.x, mouse_normalized.y));
     return coords * zoom;
+}
+
+vec2 rotate2D(vec2 coords, float angle){
+    coords -= 0.5;
+    coords = mat2(cos(angle),-sin(angle),
+                  sin(angle),cos(angle)) * coords;
+    coords += 0.5;
+    return coords;
 }
 
 vec2 translate(vec2 coords, vec2 dxy) {
@@ -42,6 +49,8 @@ vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords)
 {
     vec2 coords = screen_coords/love_ScreenSize.xy;
     coords = zoom_by_mouse(coords);
+    float mouse_angle = atan(mouse_normalized.y-0.5, mouse_normalized.x-0.5);
+    coords = rotate2D(coords, mouse_angle);
 
     vec3 red = vec3(0.86, 0.15, 0.15);
     vec3 gray = vec3(0.75, 0.75, 0.75);
