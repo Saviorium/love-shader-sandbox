@@ -16,23 +16,13 @@ states = {
     fullscreenShader = require "game.states.fullscreen_shader",
 }
 
-local function loadShader(name)
-    local shaderCode = love.filesystem.read("game/shaders/" .. name .. ".glsl")
-    return love.graphics.newShader(shaderCode)
-end
-
-shaders = {
-    coord = loadShader("coord"),
-    time = loadShader("time"),
-    mouse = loadShader("mouse"),
-}
-
 local RingStruct = require "game.ring_struct"
 
 local shaderStates = RingStruct()
 shaderStates:push({type = "fullscreenShader", args = "coord"})
 shaderStates:push({type = "fullscreenShader", args = "time"})
 shaderStates:push({type = "fullscreenShader", args = "mouse"})
+shaderStates:push({type = "fullscreenShader", args = "matrix_pattern"})
 
 function love.load()
     AssetManager:load("data")

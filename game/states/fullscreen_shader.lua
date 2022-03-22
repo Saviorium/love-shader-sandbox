@@ -1,7 +1,12 @@
 local state = {}
 
+local function loadShader(name)
+    local shaderCode = love.filesystem.read("game/shaders/" .. name .. ".glsl")
+    return love.graphics.newShader(shaderCode)
+end
+
 function state:enter(prev, shader)
-    self.shader = shaders[shader]
+    self.shader = loadShader(shader)
     print(shader)
 end
 
