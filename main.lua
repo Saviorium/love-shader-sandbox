@@ -29,15 +29,33 @@ function love.load()
     StateManager.switch(states.menu)
 end
 
+local debugPixelTimer = 0
+local debugPixel = ""
+
 function love.draw()
     StateManager.draw()
     if Debug and Debug.showFps == 1 then
         love.graphics.print(""..tostring(love.timer.getFPS( )), 2, 2)
     end
-    if Debug and Debug.mousePos == 1 then
+    if Debug and Debug.mousePixelInfo == 1 then
         local x, y = love.mouse.getPosition()
-        love.graphics.print(""..tostring(x)..","..tostring(y), 2, 32)
+        local screenX, screenY = love.graphics.getDimensions()
+
+        if debugPixelTimer > 0.5 then
+            love.graphics.captureScreenshot( function(image)
+                local debugPixelColor = { image:getPixel(x, y) }
+                debugPixel = string.format("%.2f %.2f %.2f", debugPixelColor[1], debugPixelColor[2], debugPixelColor[3])
+            end )
+            debugPixelTimer = 0
+        end
+
+        love.graphics.rectangle("fill", x-1, y-1, 1, 1)
+        love.graphics.print(string.format("%.2f %.2f\n%s", x/screenX, y/screenY, debugPixel), x+10, y)
     end
+end
+
+function love.update(dt)
+    debugPixelTimer = debugPixelTimer + dt
 end
 
 function love.mousepressed(x, y)

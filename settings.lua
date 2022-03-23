@@ -5,6 +5,6 @@ settings = {
 }
 
 Debug = {
-    showFps = 0,
-    mousePos = 0,
+    showFps = 1,
+    mousePixelInfo = 1,
 }
