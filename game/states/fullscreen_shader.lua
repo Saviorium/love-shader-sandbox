@@ -5,9 +5,15 @@ local function loadShader(name)
     return love.graphics.newShader(shaderCode)
 end
 
-function state:enter(prev, shader)
-    self.shader = loadShader(shader)
-    print(shader)
+function state:enter(prev, shaderName)
+    local success, err = pcall(function()
+        self.shader = loadShader(shaderName)
+        print(shaderName)
+    end)
+    if not success then
+        print(err)
+        StateManager.switch(states.menu)
+    end
 end
 
 function state:keypressed(key)
