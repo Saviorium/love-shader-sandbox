@@ -23,6 +23,7 @@ shaderStates:push({type = "fullscreenShader", args = "coord"})
 shaderStates:push({type = "fullscreenShader", args = "time"})
 shaderStates:push({type = "fullscreenShader", args = "mouse"})
 shaderStates:push({type = "fullscreenShader", args = "matrix_pattern"})
+shaderStates:push({type = "fullscreenShader", args = "plot"})
 
 function love.load()
     AssetManager:load("data")
